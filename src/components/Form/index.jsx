@@ -9,25 +9,27 @@ const Form = ({handleAdd, setTransactionsList, transactionsList}) => {
   const generateID = () => Math.round(Math.random() * 1000);
 
   const handleSave = () => {
+    const onlyNumber = /^[0-9].+$/
     if (!desc || !amount) {
       alert("Informe a descrição e o valor!");
       return;
     } else if (amount < 1) {
       alert("O valor tem que ser positivo!");
       return;
+    } else if(!onlyNumber.test(amount)) {
+        alert('Tem que ser apenas números')
+        return;
     }
     const transaction = {
         id: generateID,
         desc: desc,
-        amount: amount,
+        amount: amount.replace(',', '.'),
         expense: isExpense
       };
       handleAdd(transaction);
       setDesc("");
       setAmount("")
   };
-
- console.log(isExpense)
   return (
     <>
     <Styled.Container>
